@@ -1,0 +1,27 @@
+# Run with:
+# $ gcloud builds submit
+# Important: Requires that the cloud build service account has permission to list quotas
+steps:
+  - id: "Prepare the workspace"
+    name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: bash
+    args: ['./scripts/global-workspace-setup.sh']
+  - id: "Run the quota regression"
+    name: gcr.io/cloud-builders/bazel
+    dir: '/persistent_deploy'
+    env:
+      - 'BASELINE_API_NAME=abstract-grpc-relay-service.endpoints.masarick-gke.cloud.goog'
+      - 'PRODUCTION_API_NAME=abstract-grpc-relay-service-v2.endpoints.masarick-gke.cloud.goog'
+      - 'BASELINE_PROJECT_NUMBER=$PROJECT_NUMBER'
+      - 'PRODUCTION_PROJECT_NUMBER=$PROJECT_NUMBER'
+      - 'METRIC_NAME=library.googleapis.com/read_calls'
+    args: [
+      'run',
+      'quota_regression'
+    ]
+timeout: 3600s
+options:
+  machineType: 'E2_HIGHCPU_8'
+  volumes:
+      - name: 'deployment_output'
+        path: '/persistent_deploy'
