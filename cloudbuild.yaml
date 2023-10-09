@@ -10,8 +10,8 @@ steps:
     name: gcr.io/cloud-builders/bazel
     dir: '/persistent_deploy'
     env:
-      - 'BASELINE_API_NAME=abstract-grpc-relay-service.endpoints.masarick-gke.cloud.goog'
-      - 'PRODUCTION_API_NAME=abstract-grpc-relay-service-v2.endpoints.masarick-gke.cloud.goog'
+      - 'BASELINE_API_NAME=bookservice.endpoints.titan-cronus.cloud.goog'
+      - 'PRODUCTION_API_NAME=bookservice-v2.endpoints.titan-cronus.cloud.goog'
       - 'BASELINE_PROJECT_NUMBER=$PROJECT_NUMBER'
       - 'PRODUCTION_PROJECT_NUMBER=$PROJECT_NUMBER'
       - 'METRIC_NAME=library.googleapis.com/read_calls'
