@@ -1,0 +1,4 @@
+### Bazel ###
+bazel-*
+service/
+.bazelproject
