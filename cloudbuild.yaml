@@ -6,12 +6,25 @@ steps:
     name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: bash
     args: ['./scripts/global-workspace-setup.sh']
-  - id: "Run the quota regression"
+  - id: "Run PASSING test for Quota Regression"
     name: gcr.io/cloud-builders/bazel
     dir: '/persistent_deploy'
     env:
       - 'BASELINE_API_NAME=bookservice.endpoints.titan-cronus.cloud.goog'
       - 'PRODUCTION_API_NAME=bookservice-v2.endpoints.titan-cronus.cloud.goog'
+      - 'BASELINE_PROJECT_NUMBER=$PROJECT_NUMBER'
+      - 'PRODUCTION_PROJECT_NUMBER=$PROJECT_NUMBER'
+      - 'METRIC_NAME=library.googleapis.com/read_calls'
+    args: [
+      'run',
+      'quota_regression'
+    ]
+  - id: "Run FAILING test for Quota Regression"
+    name: gcr.io/cloud-builders/bazel
+    dir: '/persistent_deploy'
+    env:
+      - 'BASELINE_API_NAME=bookservice-v2.endpoints.titan-cronus.cloud.goog'
+      - 'PRODUCTION_API_NAME=bookservice.endpoints.titan-cronus.cloud.goog'
       - 'BASELINE_PROJECT_NUMBER=$PROJECT_NUMBER'
       - 'PRODUCTION_PROJECT_NUMBER=$PROJECT_NUMBER'
       - 'METRIC_NAME=library.googleapis.com/read_calls'
