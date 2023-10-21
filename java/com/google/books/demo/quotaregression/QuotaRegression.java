@@ -3,7 +3,7 @@ package com.google.books.demo.quotaregression;
 import com.google.books.demo.quotaregression.EnvironmentVariables.Key;
 import com.google.common.collect.ImmutableMap;
 
-/** Main code responsible for running the quota regreswion chek. */
+/** Main code responsible for running the quota regreswion check. */
 public final class QuotaRegression {
 
   private QuotaRegression() {}
